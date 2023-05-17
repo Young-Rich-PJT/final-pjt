@@ -11,8 +11,7 @@
       </div>
 
       <div v-if="activeTab === 'savings'">
-        <h2 class="list-title">적금 List</h2>
-        <!-- 적금에 대한 컴포넌트 또는 내용을 추가하세요 -->
+        <saving-list ref="savingList" :propsdata="mergedSavingData"></saving-list>
       </div>
     </div>
   </section>
@@ -21,11 +20,13 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import DepositList from '@/components/DepositList.vue';
+import SavingList from '@/components/SavingList.vue';
 
 export default {
   name: 'CompareView',
   components: {
-    DepositList: DepositList,
+    DepositList,
+    SavingList,
   },
   data() {
     return {
@@ -33,9 +34,9 @@ export default {
     };
   },
   computed: {
-    ...mapState(['dataList']),
+    ...mapState(['depositList', 'savingList']),
     mergedDepositData() {
-      return this.dataList.map(data => {
+      return this.depositList.map(data => {
         if (data.additionalData) {
           return {
             ...data,
@@ -46,15 +47,29 @@ export default {
         }
       });
     },
+    mergedSavingData() {
+      return this.savingList.map(data => {
+        if (data.additionalData) {
+          return {
+            ...data,
+            intr_rate: data.additionalData.intr_rate,
+            }
+        
+        } else {
+          return data;
+        }
+      });
+    },
   },
   methods: {
-    ...mapActions(['fetchData']),
+    ...mapActions(['fetchDepositData', 'fetchSavingData']),
     changeTab(tab) {
       this.activeTab = tab;
     },
   },
   mounted() {
-    this.fetchData();
+    this.fetchDepositData();
+    this.fetchSavingData();
   },
 };
 </script>
