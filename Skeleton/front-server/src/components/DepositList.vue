@@ -58,8 +58,8 @@ export default {
 
 <style>
 .dataList {
-  margin-top: 150px;
-  display: flex;
+  
+  display: relative;
   justify-content: center;
 }
 
@@ -78,14 +78,4 @@ export default {
   margin-top: 0;
 }
 
-/* 반응형 스타일 */
-@media (max-width: 600px) {
-  .list-card {
-    max-height: unset;
-  }
-  
-  .table-container {
-    max-height: unset;
-  }
-}
 </style>

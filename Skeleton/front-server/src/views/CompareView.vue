@@ -1,8 +1,8 @@
 <template>
   <section class="dataList">
     <div class="tab-bar">
-      <button class="tab" :class="{ active: activeTab === 'deposit' }" @click="changeTab('deposit')">예금</button>
-      <button class="tab" :class="{ active: activeTab === 'savings' }" @click="changeTab('savings')">적금</button>
+     <button class="tab deposit" :class="{ active: activeTab === 'deposit' }" @click="changeTab('deposit')">예금</button>
+     <button class="tab savings" :class="{ active: activeTab === 'savings' }" @click="changeTab('savings')">적금</button>
     </div>
 
     <div class="tab-content">
@@ -75,16 +75,6 @@ export default {
 </script>
 
 <style>
-.dataList {
-  margin-top: 100px;
-  text-align: center;
-}
-
-.tab-bar {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 20px;
-}
 
 .tab {
   padding: 8px 16px;
@@ -93,33 +83,11 @@ export default {
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
+  margin-right: 5px;
 }
 
 .tab.active {
   background-color: #e2e2e2;
 }
 
-.tab-content {
-  margin-left: 100px;
-}
-
-.list-title {
-  margin-bottom: 20px;
-  font-size: 24px;
-}
-
-/* 추가된 스타일 */
-.tab-bar {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.tab {
-  flex: 1;
-  margin-right: 5px;
-}
-
-.tab-content {
-  margin-left: 0;
-}
 </style>
