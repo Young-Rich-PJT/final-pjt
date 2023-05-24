@@ -1,11 +1,13 @@
 <template>
   <div id="calc">
+    <br><br>
+    <h1 class="ercword center">환율계산기</h1>
     <br>
-    <h1 class="ercword">환율계산기</h1>
-    <p>외화 환전금액을 계산하여 드립니다.</p>
+    <p class="center">외화 환전금액을 계산하여 드립니다.</p>
     <div class="container-calc">
       <div class="container-one">
         <select name="first-currency" id="first-currency" v-model="currency_one">
+          <!-- 기타 옵션들 -->
           <option value="AED">AED</option>
           <option value="ARS">ARS</option>
           <option value="AUD">AUD</option>
@@ -59,7 +61,7 @@
           <option value="VND">VND</option>
           <option value="ZAR">ZAR</option>
         </select>
-        <input type="number" name="input-one" id="input" v-model="amountOne" @input="fetchData()"/>
+        <input type="number" name="input-one" id="input" v-model="amountOne" @input="fetchData()" />
       </div>
       <div class="container-two">
         <button class="swap" @click="swapValues()">swap</button>
@@ -67,6 +69,7 @@
       </div>
       <div class="container-three">
         <select name="second-currency" id="second-currency" v-model="currency_two">
+          <!-- 기타 옵션들 -->
           <option value="AED">AED</option>
           <option value="ARS">ARS</option>
           <option value="AUD">AUD</option>
@@ -120,15 +123,18 @@
           <option value="VND">VND</option>
           <option value="ZAR">ZAR</option>
         </select>
-        <input type="number" id="amount-two" placeholder="0" disabled v-model="amountTwo" />
+        <div id="result">
+          <h2>
+            <input type="number" id="amount-two" placeholder="0" disabled v-model="amountTwo" />
+          </h2>
+        </div>
       </div>
       <div class="container-four">
-        <h6 id="lastlyUpdated">최근 업데이트 : {{ data.time_last_update_utc }}</h6>
+        <h6 id="lastlyUpdated">최근 업데이트: {{ data.time_last_update_utc }}</h6>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 export default {
   data() {
@@ -143,12 +149,12 @@ export default {
   },
   methods: {
     fetchData() {
-      fetch(`https://v6.exchangerate-api.com/v6/51e2c95c2ce5649de60a9353/latest/${this.currency_one}`)
+      fetch(`https://v6.exchangerate-api.com/v6/a1030034a3f8837e9ab84b03/latest/${this.currency_one}`)
       .then(res => res.json())
       .then(data => {
         this.data = data
         this.rate = data.conversion_rates[this.currency_two]
-        this.amountTwo = this.amountOne * this.rate.toFixed(2)
+        this.amountTwo = this.amountOne * this.rate
       })
     },
     swapValues() {
@@ -165,11 +171,6 @@ export default {
 </script>
 
 <style scoped>
-
-/* * {
-  box-sizing: border-box;
-} */
-
 #calc {
   display: flex;
   flex-direction: column;
@@ -180,11 +181,15 @@ export default {
 }
 
 .ercword {
-  color: #5fbaaf;
+  color: #0dcaf0;
+}
+
+.center {
+  text-align: center;
 }
 
 .container-calc {
-  width: 50%;
+  width: 70%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -197,35 +202,47 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 10px;
 }
 
 .swap {
-  background-color: #5fbaa7;
+  background-color: #0dcaf0;
   color: #fff;
   padding: 5px 12px;
   border-radius: 10px;
+  border: none;
+  cursor: pointer;
 }
 
-select {
-  padding: 5px;
-  margin: 5px;
-  border: 1px solid rgba(0,0,0,0,5);
-  outline: none;
+.swap:hover {
+  background-color: #0dcaf0;
 }
 
+#result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* 필요에 따라 높이 조정 */
+}
+
+select,
 #input {
   padding: 5px;
   margin: 5px;
-  border: 1px solid rgba(0,0,0,0,5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
   outline: none;
-  font-size: 18px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 200px;
 }
 
 #lastlyUpdated {
   font-weight: 500;
+  margin-top: 10px;
 }
 
 #baseValue {
   font-weight: 500;
+  margin-top: 10px;
 }
 </style>
